@@ -1,3 +1,4 @@
+from birthday import Birthday
 from name import Name
 from phone import Phone
 from utils.is_valid_phone import is_valid_phone
@@ -6,6 +7,7 @@ class Record:
     def __init__(self, name):
         self.name = Name(name)
         self.phones = []
+        self.birthday = None
 
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
@@ -31,3 +33,11 @@ class Record:
             if item.value == phone:
                 return item.value
         raise KeyError
+
+    def add_birthday(self, birthday):
+        self.birthday = Birthday(birthday)
+
+    def show_birthday(self):
+        if self.birthday:
+            return f"Birthday for {self.name.value}: {self.birthday.value}"
+        return f"No birthday set for {self.name.value}"

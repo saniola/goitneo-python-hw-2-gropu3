@@ -12,7 +12,7 @@ def input_error(func):
             elif func.__name__ == "show_all":
                 return "Error: Use 'all' without arguments."
         except KeyError:
-            if func.__name__ == "show_phone":
+            if func.__name__ == "show_phone" or func.__name__ == "add_birthday" or func.__name__ == "show_birthday":
                 name = args[0]
                 return f"Error: Contact with name {name} not found."
             if func.__name__ == "show_all":
@@ -23,4 +23,6 @@ def input_error(func):
         except TypeError:
             if func.__name__ == "change_contact" or func.__name__ == "add_contact":
                 return "Error: The phone number must be 10 digits"
+            if func.__name__ == "add_birthday":
+                return "Error: Incorrect birthday date format. Use DD.MM.YYYY."
     return inner

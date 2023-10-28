@@ -1,6 +1,5 @@
 from adressbook import AddressBook
 from decorators.input_error import input_error
-from utils.is_valid_phone import is_valid_phone
 from record import Record
 
 @input_error
@@ -58,3 +57,27 @@ def show_all(args, contacts: AddressBook):
             phone_numbers = [phone.value for phone in record.phones]
             result += f"{name}: {', '.join(phone_numbers)}\n"
         return result
+
+@input_error
+def add_birthday(args, contacts: AddressBook):
+    name, birthday = args
+    name = name.lower()
+
+    if name in contacts:
+        record = contacts[name]
+        record.add_birthday(birthday)
+        return f"Birthday added for {name}."
+    else:
+        raise KeyError
+
+@input_error
+def show_birthday(args, contacts: AddressBook):
+    name = args[0]
+    name = name.lower()
+
+    if name in contacts:
+        record = contacts[name]
+        return record.show_birthday()
+    else:
+        raise KeyError
+
