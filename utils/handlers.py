@@ -8,14 +8,11 @@ def add_contact(args, contacts: AddressBook):
     name, phone = args
     name = name.lower()
 
-    if not is_valid_phone(phone):
-        raise TypeError
-
     if name in contacts:
-        record = contacts[name]
+        record: Record = contacts[name]
         record.add_phone(phone)
     else:
-        record = Record(name)
+        record: Record = Record(name)
         record.add_phone(phone)
         contacts.add_record(record)
 
@@ -26,17 +23,11 @@ def change_contact(args, contacts: AddressBook):
     name, old_phone, new_phone = args
     name = name.lower()
 
-    if not is_valid_phone(new_phone):
-        raise TypeError
-
     if name in contacts:
-        record = contacts[name]
+        record: Record = contacts[name]
 
-        try:
-            record.edit_phone(old_phone, new_phone)
-            return f"Contact {name} updated. New phone number: {new_phone}."
-        except ValueError as e:
-            raise ValueError(str(e))
+        record.edit_phone(old_phone, new_phone)
+        return f"Contact {name} updated. New phone number: {new_phone}."
     else:
         raise KeyError
 
@@ -46,7 +37,7 @@ def show_phone(args, contacts: AddressBook):
     name = name.lower()
 
     if name in contacts:
-        record = contacts[name]
+        record: Record = contacts[name]
         phone_numbers = [phone.value for phone in record.phones]
         return f"Phone numbers for {name}: {', '.join(phone_numbers)}."
     else:

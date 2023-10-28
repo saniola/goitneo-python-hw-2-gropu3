@@ -1,6 +1,5 @@
 def input_error(func):
     def inner(*args, **kwargs):
-        print(args)
         try:
             return func(*args, **kwargs)
         except ValueError:
