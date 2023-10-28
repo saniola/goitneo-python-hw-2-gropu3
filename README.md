@@ -20,7 +20,7 @@ A new function `get_birthdays_per_week` has been added to the `AddressBook` clas
 The following commands are supported by the bot:
 
 - `add [name] [phone]`: Add a new contact with a name and phone number.
-- `change [name] [new phone]`: Change the phone number for a specified contact.
+- `change [name] [old phone] [new phone]`: Change the phone number for a specified contact.
 - `phone [name]`: Show the phone number for a specified contact.
 - `all`: Show all contacts in the address book.
 - `add-birthday [name] [birth date]`: Add a date of birth for a specified contact.
