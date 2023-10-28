@@ -3,10 +3,7 @@ from utils.is_valid_phone import is_valid_phone
 
 class Phone(Field):
     def __init__(self, phone):
-        if not self.is_valid_phone(phone):
-            raise ValueError("Error: The phone number must be 10 digits")
+        if not is_valid_phone(phone):
+            print('error')
+            raise TypeError
         super().__init__(phone)
-
-    @staticmethod
-    def is_valid_phone(phone):
-        return is_valid_phone(phone)
