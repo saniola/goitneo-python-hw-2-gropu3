@@ -7,9 +7,17 @@ from record import Record
 def add_contact(args, contacts: AddressBook):
     name, phone = args
     name = name.lower()
-    user: Record = Record(name)
-    user.add_phone(phone)
-    contacts.add_record(user)
+
+    if not is_valid_phone(phone):
+        raise TypeError
+
+    if name in contacts:
+        record = contacts[name]
+        record.add_phone(phone)
+    else:
+        record = Record(name)
+        record.add_phone(phone)
+        contacts.add_record(record)
 
     return f"Contact {name} with phone number {phone} added."
 
@@ -17,17 +25,34 @@ def add_contact(args, contacts: AddressBook):
 def change_contact(args, contacts: AddressBook):
     name, old_phone, new_phone = args
     name = name.lower()
-    user: Record = contacts.find(name)
-    phone = user.find_phone(old_phone)
-    user.edit_phone(phone, new_phone)
 
+    if not is_valid_phone(new_phone):
+        raise TypeError
+
+    if name in contacts:
+        record = contacts[name]
+
+        try:
+            record.edit_phone(old_phone, new_phone)
+            return f"Contact {name} updated. New phone number: {new_phone}."
+        except ValueError as e:
+            raise ValueError(str(e))
+    else:
+        raise KeyError
+
+@input_error
 def show_phone(args, contacts: AddressBook):
     name = args[0]
     name = name.lower()
-    user: Record = contacts.find(name)
 
-    return f"Phone numbers for {name}: {', '.join(user.phones)}."
+    if name in contacts:
+        record = contacts[name]
+        phone_numbers = [phone.value for phone in record.phones]
+        return f"Phone numbers for {name}: {', '.join(phone_numbers)}."
+    else:
+        raise KeyError
 
+@input_error
 def show_all(args, contacts: AddressBook):
     if len(args) > 0:
         raise ValueError
@@ -35,8 +60,10 @@ def show_all(args, contacts: AddressBook):
     if not contacts:
         raise KeyError
 
-    if len(contacts.data.items()) > 0:
-        print("All saved contacts with phone numbers:")
+    if len(contacts) > 0:
+        result = "All saved contacts with phone numbers:\n"
 
-        for name, record in contacts.data.items():
-           print(record)
+        for name, record in contacts.items():
+            phone_numbers = [phone.value for phone in record.phones]
+            result += f"{name}: {', '.join(phone_numbers)}\n"
+        return result

@@ -11,7 +11,6 @@ class Record:
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
 
     def add_phone(self, phone):
-        print('here')
         self.phones.append(Phone(phone))
 
     def remove_phone(self, phone):
