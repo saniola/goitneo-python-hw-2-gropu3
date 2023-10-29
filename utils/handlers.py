@@ -32,6 +32,8 @@ def change_contact(args, contacts: AddressBook):
 
 @input_error
 def show_phone(args, contacts: AddressBook):
+    if  len(args) != 1:
+        raise ValueError
     name = args[0]
     name = name.lower()
 
@@ -72,6 +74,8 @@ def add_birthday(args, contacts: AddressBook):
 
 @input_error
 def show_birthday(args, contacts: AddressBook):
+    if  len(args) != 1:
+        raise ValueError
     name = args[0]
     name = name.lower()
 
@@ -81,3 +85,9 @@ def show_birthday(args, contacts: AddressBook):
     else:
         raise KeyError
 
+@input_error
+def birthdays(args, contacts: AddressBook):
+    if len(args) > 0:
+        raise ValueError
+
+    return contacts.get_birthdays_per_week()

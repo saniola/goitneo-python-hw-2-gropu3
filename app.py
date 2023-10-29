@@ -1,5 +1,5 @@
 from adressbook import AddressBook
-from utils.handlers import add_contact, change_contact, show_phone, show_all, add_birthday, show_birthday
+from utils.handlers import add_contact, change_contact, show_phone, show_all, add_birthday, show_birthday, birthdays
 
 def parse_input(user_input):
     cmd, *args = user_input.split()
@@ -34,6 +34,6 @@ def app():
         elif command == "show-birthday":
             print(show_birthday(args, contacts))
         elif command == "birthdays":
-            contacts.get_birthdays_per_week()
+            print(birthdays(args, contacts))
         else:
             print("Invalid command.")
